@@ -1,24 +1,17 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Ruby 2.4.0p0
 
-Things you may want to cover:
-
-* Ruby version
+* Rails Rails 5.0.1
 
 * System dependencies
 
-* Configuration
+* Configuration: Nothing special yet...
 
-* Database creation
+* Database creation: rails db:create:all
 
-* Database initialization
+* Database migration: rails db:migrate
 
-* How to run the test suite
+* Test Suite: RSpec & Guard
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Services (job queues, cache servers, search engines, etc.): None.
