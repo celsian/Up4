@@ -1,8 +1,8 @@
 # README
 
-* Ruby 2.4.0p0
+* Ruby 2.4.1p111
 
-* Rails Rails 5.0.1
+* Rails Rails 5.1.2
 
 * System dependencies
 
