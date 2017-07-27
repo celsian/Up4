@@ -19,7 +19,7 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe "GET #show" do
-    let(:event) { FactoryGirl.create(:event) }
+    let(:event) { create(:event) }
 
     it "returns http success" do
       get :show, params: { id: event.id }

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Event, type: :model do
-  let(:event) { FactoryGirl.create(:event) }
+  let(:event) { create(:event) }
 
   describe "validate" do
     it "does not allow empty name" do
