@@ -1,5 +1,5 @@
-<div class="col-md-4">
-<h2>Create Event:</h2>
+<div class="col-md-5">
+<h2>New Event:</h2>
 
 <%= form_for @event do |f| %>
 
@@ -13,8 +13,14 @@
     <%= f.text_field :location, class: "form-control" %></div><br>
 
   <div><%= f.label :time_date %><br>
-    <%= f.text_field :time_date, class: "form-control" %></div><br>
+    <div class="input-group" id='event_time_date'>
+      <%= f.text_field :time_date, class: "form-control" %>
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+      </div>
+    </div><br>
 
-  <div><%= f.submit "", class: "btn btn-primary" %></div>
+  <div><%= f.submit class: "btn btn-primary" %></div>
 <% end %>
 </div>

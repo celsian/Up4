@@ -7,6 +7,9 @@ gem 'rails', '~> 5.1.2'
 gem "pg"
 gem 'devise'
 
+gem 'momentjs-rails', '>= 2.9.0' #for datetimepicker
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
