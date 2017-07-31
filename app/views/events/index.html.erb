@@ -1,2 +1,6 @@
-<H2>Test</H2>
-<P>Find me in /events/index.html.erb</P>
+<H2>Events:</H2>
+<ul>
+  <% @events.each do |event| %>
+  <li><%= event.name %></li>
+  <% end %>
+</ul>

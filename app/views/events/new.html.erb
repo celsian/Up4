@@ -1,0 +1,20 @@
+<div class="col-md-4">
+<h2>Create Event:</h2>
+
+<%= form_for @event do |f| %>
+
+  <div><%= f.label :name %><br>
+  <%= f.text_field :name, autofocus: true, class: "form-control" %></div><br>
+
+  <div><%= f.label :description %> (Optional)<br>
+    <%= f.text_field :description, class: "form-control" %></div><br>
+
+  <div><%= f.label :location %><br>
+    <%= f.text_field :location, class: "form-control" %></div><br>
+
+  <div><%= f.label :time_date %><br>
+    <%= f.text_field :time_date, class: "form-control" %></div><br>
+
+  <div><%= f.submit "", class: "btn btn-primary" %></div>
+<% end %>
+</div>
