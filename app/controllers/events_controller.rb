@@ -11,4 +11,22 @@ class EventsController < ApplicationController
     @event = Event.new
   end
 
+  def create
+    @event = Event.new(event_params)
+    @event.owner = current_user
+
+    if @event.save
+      current_user.events << @event
+      redirect_to event_path(@event)
+    else
+      flash[:error] = "Error: #{@event.error_messages}"
+      render :new
+    end
+  end
+
+  private
+
+  def event_params
+    params.require(:event).permit(:name, :description, :location, :time_date)
+  end
 end

@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe EventsController, type: :controller do
   let(:user) { create(:user) }
 
+  before(:each, :sign_in_user) do
+    sign_in user
+  end
+
   describe "GET #index" do
     it "returns http success" do
       get :index
@@ -51,13 +55,13 @@ RSpec.describe EventsController, type: :controller do
   describe "POST #create" do
     context "user logged in" do
       let(:params) { { event: attributes} }
-      let(:attributes) { { owner: user, name: "hi", location: "somewhere", time_date: Time.now+5.hours } }
-      #sign_in user (this needs to be added)
+      let(:attributes) { { name: "hi", description: "test event", location: "somewhere", time_date: Time.now+5.hours } }
 
-      it "creates & redirects to event show page" do
-        #post :create, params: { params }
+      it "creates & redirects to event show page", :sign_in_user do
+        post :create, params: params
 
-        #expect(response).to redirect_to(event_show(event))
+        expect(assigns(:event).users).to include(user)
+        expect(response).to redirect_to(event_path(assigns(:event)))
       end
     end
   end
