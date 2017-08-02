@@ -12,9 +12,9 @@
   <div><%= f.label :location %><br>
     <%= f.text_field :location, class: "form-control" %></div><br>
 
-  <div><%= f.label :time_date %><br>
+  <div><%= f.label :time_date %> <small>mm/dd/yyyy h:mm am</small><br>
     <div class="input-group" id='event_time_date'>
-      <%= f.text_field :time_date, class: "form-control" %>
+      <%= f.text_field :time_date, :autocomplete => :off, class: "form-control" %>
         <span class="input-group-addon">
           <span class="glyphicon glyphicon-calendar"></span>
         </span>
