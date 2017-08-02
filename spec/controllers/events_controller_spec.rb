@@ -55,13 +55,24 @@ RSpec.describe EventsController, type: :controller do
   describe "POST #create" do
     context "user logged in" do
       let(:params) { { event: attributes} }
-      let(:attributes) { { name: "hi", description: "test event", location: "somewhere", time_date: Time.now+5.hours } }
+      let(:attributes) { { name: "hi", description: "test event", location: "somewhere", time_date: "08/17/2017 11:00 AM" } }
 
       it "creates & redirects to event show page", :sign_in_user do
         post :create, params: params
 
-        expect(assigns(:event).users).to include(user)
         expect(response).to redirect_to(event_path(assigns(:event)))
+      end
+
+      it "has the proper owner", :sign_in_user do
+        post :create, params: params
+
+        expect(assigns(:event).users).to include(user)
+      end
+
+      it "has the proper time", :sign_in_user do
+        post :create, params: params
+
+        expect(assigns(:event).time_date).to eq("2017-08-17 11:00:00 -0700".to_time.to_s)
       end
     end
   end

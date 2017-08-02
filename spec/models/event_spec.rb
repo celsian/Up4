@@ -26,4 +26,13 @@ RSpec.describe Event, type: :model do
       expect(event.owner.class).to eq(User)
     end
   end
+
+  describe "#parse_time" do
+    it "parses time with time_date_param" do
+      event = Event.new(name: "hi", description: "test event", location: "somewhere", time_date: "08/17/2017 11:00 AM")
+      event.parse_time
+
+      expect(event.time_date).to eq("2017-08-17 11:00:00 -0700")
+    end
+  end
 end
