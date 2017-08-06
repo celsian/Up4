@@ -1,26 +1,33 @@
 <div class="col-md-5">
-<h2>New Event:</h2>
+  <h2>New Event:</h2>
 
-<%= form_for @event do |f| %>
+  <%= form_for @event do |f| %>
 
-  <div><%= f.label :name %><br>
-  <%= f.text_field :name, autofocus: true, class: "form-control" %></div><br>
-
-  <div><%= f.label :description %> (Optional)<br>
-    <%= f.text_area :description, class: "form-control" %></div><br>
-
-  <div><%= f.label :location %><br>
-    <%= f.text_field :location, class: "form-control" %></div><br>
-
-  <div><%= f.label :time_date %> <small>mm/dd/yyyy h:mm am</small><br>
-    <div class="input-group" id='event_time_date'>
-      <%= f.text_field :time_date, :autocomplete => :off, class: "form-control" %>
-        <span class="input-group-addon">
-          <span class="glyphicon glyphicon-calendar"></span>
-        </span>
-      </div>
+    <div><%= f.label :name %>
+      <%= f.text_field :name, autofocus: true, class: "form-control" %>
     </div><br>
 
-  <div><%= f.submit class: "btn btn-primary" %></div>
-<% end %>
+    <div><%= f.label :description %> (Optional)<br>
+      <%= f.text_area :description, class: "form-control" %>
+    </div><br>
+
+    <div><%= f.label :location %>
+      <%= f.text_field :location, class: "form-control" %>
+    </div><br>
+
+    <div><%= f.label :time_date %> <small>mm/dd/yyyy h:mm am</small><br>
+    </div>
+    <div style="overflow:hidden;">
+      <div class="form-group">
+          <div class="row">
+              <div class="col-md-12">
+                  <div id="datetimepicker12"><%= f.text_field :time_date, :autocomplete => :off, class: "form-control" %>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <div><%= f.submit class: "btn btn-primary" %></div>
+  <% end %>
 </div>
