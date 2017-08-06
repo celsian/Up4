@@ -35,4 +35,14 @@ RSpec.describe Event, type: :model do
       expect(event.time_date).to eq("2017-08-17 11:00:00 -0700")
     end
   end
+
+  describe "#time_date_format" do
+    it "validates the format" do
+      event = Event.new(name: "hi", description: "test event", location: "somewhere", time_date: "INCORRECT TIME")
+      event.parse_time
+      event.save
+
+      expect(event.error_messages).to include("Time & Date: Invalid format")
+    end
+  end
 end

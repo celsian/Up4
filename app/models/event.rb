@@ -5,20 +5,31 @@ class Event < ApplicationRecord
   has_many :user_events
   has_many :users, through: :user_events
 
-  validates_presence_of(:name, :time_date, :location)
-  #need to validate :time_date is in the proper format (eg Time.now).
+  validates_presence_of(:name, :location)
+  validate :time_date_format
   #need to validate :time_date is a future event.
+
+  def time_date_format
+    if time_date == "invalid format"
+      errors.add(:base, "Time & Date: Invalid format")
+    end
+  end
+
+  def parse_time
+    begin
+      self.time_date = Time.strptime(self.time_date, "%m/%d/%Y %l:%M %p")
+    rescue ArgumentError
+      self.time_date = "invalid format"
+    end
+  end
 
   def error_messages
     messages = ""
     errors.full_messages.each do |message|
       messages += message + ". "
     end
-    messages
-  end
 
-  def parse_time
-    self.time_date = Time.strptime(self.time_date, "%m/%d/%Y %l:%M %p")
+    messages
   end
 
 end

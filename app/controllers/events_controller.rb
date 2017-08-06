@@ -18,7 +18,7 @@ class EventsController < ApplicationController
 
     if @event.save
       current_user.events << @event
-      redirect_to event_path(@event)
+      redirect_to event_path(@event), flash: {success: "Event was created."}
     else
       flash[:error] = "Error: #{@event.error_messages}"
       render :new
