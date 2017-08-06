@@ -5,21 +5,15 @@ RSpec.describe Event, type: :model do
 
   describe "validate" do
     it "does not allow empty name" do
-      event = Event.create(name: "", time_date: Time.now, location: "Address", description: "")
+      event = Event.create(name: "", location: "Address", description: "", time_date: "08/17/2017 11:00 AM")
 
-      expect(Event.last).to_not eq(event)
-    end
-
-    it "does not allow empty time_date" do
-      event = Event.create(name: "Hi", time_date: "", location: "Address", description: "")
-
-      expect(Event.last).to_not eq(event)
+      expect(event.error_messages).to include("Name can't be blank")
     end
 
     it "does not allow empty location" do
-      event = Event.create(name: "Hi", time_date: Time.now, location: "", description: "")
+      event = Event.create(name: "Hi", location: "", description: "", time_date: "08/17/2017 11:00 AM")
 
-      expect(Event.last).to_not eq(event)
+      expect(event.error_messages).to include("Location can't be blank")
     end
 
     it "belongs to a user" do
@@ -30,7 +24,7 @@ RSpec.describe Event, type: :model do
   describe "#parse_time" do
     it "parses time with time_date_param" do
       event = Event.new(name: "hi", description: "test event", location: "somewhere", time_date: "08/17/2017 11:00 AM")
-      event.parse_time
+      event.save
 
       expect(event.time_date).to eq("2017-08-17 11:00:00 -0700")
     end
@@ -39,10 +33,18 @@ RSpec.describe Event, type: :model do
   describe "#time_date_format" do
     it "validates the format" do
       event = Event.new(name: "hi", description: "test event", location: "somewhere", time_date: "INCORRECT TIME")
-      event.parse_time
       event.save
 
-      expect(event.error_messages).to include("Time & Date: Invalid format")
+      expect(event.error_messages).to include("Time & date format invalid")
+    end
+  end
+
+  describe "#time_date_future" do
+    it "validates event is in the future" do
+      event = Event.new(name: "hi", description: "test event", location: "somewhere", time_date: "08/5/2017 11:00 AM")
+      event.save
+
+      expect(event.error_messages).to include("Time & date must be a future event")
     end
   end
 end

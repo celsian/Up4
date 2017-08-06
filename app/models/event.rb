@@ -1,4 +1,6 @@
 class Event < ApplicationRecord
+  before_validation :parse_time
+
   alias_attribute :owner, :user
   belongs_to :user
 
@@ -7,11 +9,19 @@ class Event < ApplicationRecord
 
   validates_presence_of(:name, :location)
   validate :time_date_format
-  #need to validate :time_date is a future event.
+  validate :time_date_future
 
   def time_date_format
     if time_date == "invalid format"
-      errors.add(:base, "Time & Date: Invalid format")
+      errors.add(:base, "Time & date format invalid")
+    end
+  end
+
+  def time_date_future
+    if time_date != "invalid format"
+      if time_date.to_time < Time.now
+        errors.add(:base, "Time & date must be a future event")
+      end
     end
   end
 

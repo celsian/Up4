@@ -13,7 +13,6 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(event_params)
-    @event.parse_time
     @event.owner = current_user
 
     if @event.save
