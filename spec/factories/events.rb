@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :event do
-    name "Wonder Woman (Escondido)"
+    name "Wonder Woman (Orange)"
     description "Before she was Wonder Woman (Gal Gadot), she was Diana, princess of the Amazons."
-    time_date "08/17/2100 11:00 AM"
-    location "350 W Valley Pkwy, Escondido, CA 92025"
+    time_date Time.now+3.hours
+    location "20 City Blvd W E, Orange, CA 92868"
     association :owner, factory: :user
   end
 end

@@ -26,9 +26,15 @@ class Event < ApplicationRecord
   end
 
   def parse_time
-    begin
-      self.time_date = Time.strptime(self.time_date, "%m/%d/%Y %l:%M %p")
-    rescue ArgumentError
+    if self.time_date != nil
+      unless self.time_date[-2..-1] == "00" || self.time_date[-2..-1] == "30" #If time_date is a Time object already, do nothing.
+        begin #convert time_date to Time object if possible
+          self.time_date = Time.strptime(self.time_date, "%m/%d/%Y %l:%M %p")
+        rescue ArgumentError #otherwise catch and set time_date to invalid format.
+          self.time_date = "invalid format"
+        end
+      end
+    else #if time_date is nil set it to invalid format
       self.time_date = "invalid format"
     end
   end
