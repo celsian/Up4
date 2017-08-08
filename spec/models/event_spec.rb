@@ -47,4 +47,13 @@ RSpec.describe Event, type: :model do
       expect(event.error_messages).to include("Time & date must be a future event")
     end
   end
+
+  describe "#formatted_time" do
+    let(:event2) { create(:event, time_date: "08/5/2021 6:30 PM") }
+
+    it "returns the time_date in a formatted string" do
+
+      expect(event2.formatted_time).to include("6:30 PM on Thursday, August 5, 2021")
+    end
+  end
 end

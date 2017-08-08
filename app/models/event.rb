@@ -19,7 +19,7 @@ class Event < ApplicationRecord
 
   def time_date_future
     if time_date != "invalid format"
-      if time_date.to_time < Time.now
+      if time_date < Time.now
         errors.add(:base, "Time & date must be a future event")
       end
     end
@@ -30,6 +30,7 @@ class Event < ApplicationRecord
       unless self.time_date[-2..-1] == "00" || self.time_date[-2..-1] == "30" #If time_date is a Time object already, do nothing.
         begin #convert time_date to Time object if possible
           self.time_date = Time.strptime(self.time_date, "%m/%d/%Y %l:%M %p")
+          self.time = self.time_date.to_time
         rescue ArgumentError #otherwise catch and set time_date to invalid format.
           self.time_date = "invalid format"
         end
@@ -37,6 +38,10 @@ class Event < ApplicationRecord
     else #if time_date is nil set it to invalid format
       self.time_date = "invalid format"
     end
+  end
+
+  def formatted_time
+    time_date.to_time.strftime("%l:%M %p on %A, %B %-d, %Y")
   end
 
   def error_messages

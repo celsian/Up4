@@ -8,17 +8,19 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe "GET #index" do
+    let!(:event1) { create(:event) }
+    let!(:event2) { create(:event, :in_the_past) }
+
     it "returns http success" do
       get :index
 
       expect(response).to have_http_status(:success)
     end
 
-    it "lists all events" do
+    it "lists all future events" do
       get :index
-      events = Event.all
 
-      expect(assigns(:events)).to eq(events)
+      expect(Event.where("time >= ?", Time.current).count).to eq(assigns(:events).count)
     end
   end
 
