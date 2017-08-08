@@ -49,6 +49,8 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'guard-rspec'
   gem 'pry'
+
+  gem 'awesome_print'
 end
 
 group :development do
