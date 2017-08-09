@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   def index
-    @events = Event.where("time_date >= ?", Time.current)
+    @events = Event.where("time >= ?", Time.current)
   end
 
   def show

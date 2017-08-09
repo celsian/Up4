@@ -39,6 +39,13 @@ RSpec.describe Event, type: :model do
     end
   end
 
+  describe "#time_update" do
+    it "updates the time object for sql queries" do
+      #before_validation calls time_update
+      expect(event.time).to eq(event.time_date)
+    end
+  end
+
   describe "#formatted_time" do
     it "returns the time_date in a formatted string" do
       expect(event.formatted_time).to include(event.time_date.to_time.strftime("%l:%M %p on %A, %B %-d, %Y"))

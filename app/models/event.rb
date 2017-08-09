@@ -1,4 +1,6 @@
 class Event < ApplicationRecord
+  before_validation :time_update
+
   alias_attribute :owner, :user
   belongs_to :user
 
@@ -23,6 +25,10 @@ class Event < ApplicationRecord
         errors.add(:base, "Time & date must be a future event")
       end
     end
+  end
+
+  def time_update
+    self.time = self.time_date.to_time
   end
 
   def formatted_time

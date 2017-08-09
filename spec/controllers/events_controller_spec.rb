@@ -20,7 +20,7 @@ RSpec.describe EventsController, type: :controller do
     it "lists all future events" do
       get :index
 
-      expect(Event.where("time_date >= ?", Time.current).count).to eq(assigns(:events).count)
+      expect(Event.where("time >= ?", Time.current).count).to eq(assigns(:events).count)
     end
   end
 
