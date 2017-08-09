@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   def index
-    @events = Event.where("time >= ?", Time.current)
+    @events = Event.where("time_date >= ?", Time.current)
   end
 
   def show
@@ -9,6 +9,10 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+  end
+
+  def edit
+    @event = Event.find(params[:id])
   end
 
   def create

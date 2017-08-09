@@ -21,15 +21,6 @@ RSpec.describe Event, type: :model do
     end
   end
 
-  describe "#parse_time" do
-    it "parses time with time_date_param" do
-      event = Event.new(name: "hi", description: "test event", location: "somewhere", time_date: (Time.current+3.hours).strftime("%Y-%m-%d %I:%M %p"))
-      event.save
-
-      expect(event.time_date).to eq((Time.current+3.hours).strftime("%Y-%m-%d %I:%M %p"))
-    end
-  end
-
   describe "#time_date_format" do
     it "validates the format" do
       event = Event.new(name: "hi", description: "test event", location: "somewhere", time_date: "INCORRECT TIME")
