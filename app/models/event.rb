@@ -32,7 +32,7 @@ class Event < ApplicationRecord
   end
 
   def formatted_time
-    time_date.to_time.strftime("%l:%M %p on %A, %B %-d, %Y")
+    format_first = time_date.to_time.strftime("%l:%M %p on %A, %B %-d, %Y %z")
   end
 
   def error_messages
