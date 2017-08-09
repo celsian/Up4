@@ -4,7 +4,7 @@ class CreateEvents < ActiveRecord::Migration[5.1]
       t.string :name
       t.string :description
       t.string :time_date
-      t.datetime :time
+      t.time :time
       t.string :location
       t.references :user, index: true
 

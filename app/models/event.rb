@@ -1,6 +1,4 @@
 class Event < ApplicationRecord
-  before_validation :parse_time
-
   alias_attribute :owner, :user
   belongs_to :user
 
@@ -11,32 +9,19 @@ class Event < ApplicationRecord
   validate :time_date_format
   validate :time_date_future
 
+  TIME_DATE_PATTERN = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}) [AP]M [-+](\d{2}):(\d{2})/
+
   def time_date_format
-    if time_date == "invalid format"
+    unless Event::TIME_DATE_PATTERN.match?(self.time_date)
       errors.add(:base, "Time & date format invalid")
     end
   end
 
   def time_date_future
-    if time_date != "invalid format"
-      if time_date < Time.now
+    unless errors[:base].length > 0
+      if time_date.to_time < Time.current
         errors.add(:base, "Time & date must be a future event")
       end
-    end
-  end
-
-  def parse_time
-    if self.time_date != nil
-      unless self.time_date[-2..-1] == "00" || self.time_date[-2..-1] == "30" #If time_date is a Time object already, do nothing.
-        begin #convert time_date to Time object if possible
-          self.time_date = Time.strptime(self.time_date, "%m/%d/%Y %l:%M %p")
-          self.time = self.time_date.to_time
-        rescue ArgumentError #otherwise catch and set time_date to invalid format.
-          self.time_date = "invalid format"
-        end
-      end
-    else #if time_date is nil set it to invalid format
-      self.time_date = "invalid format"
     end
   end
 

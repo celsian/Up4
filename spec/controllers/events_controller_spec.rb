@@ -20,7 +20,7 @@ RSpec.describe EventsController, type: :controller do
     it "lists all future events" do
       get :index
 
-      expect(Event.where("time >= ?", Time.current).count).to eq(assigns(:events).count)
+      expect(Event.where("time_date >= ?", Time.current).count).to eq(assigns(:events).count)
     end
   end
 
@@ -57,7 +57,7 @@ RSpec.describe EventsController, type: :controller do
   describe "POST #create" do
     context "user logged in" do
       let(:params) { { event: attributes} }
-      let(:attributes) { { name: "hi", description: "test event", location: "somewhere", time_date: "08/17/2017 11:00 AM" } }
+      let(:attributes) { { name: "hi", location: "somewhere", time_date: (Time.current+3.hours).strftime("%Y-%m-%d %I:%M %p %:z") } }
 
       it "creates & redirects to event show page", :sign_in_user do
         post :create, params: params
@@ -74,7 +74,7 @@ RSpec.describe EventsController, type: :controller do
       it "has the proper time", :sign_in_user do
         post :create, params: params
 
-        expect(assigns(:event).time_date).to eq("2017-08-17 11:00:00 -0700".to_time.to_s)
+        expect(assigns(:event).time_date).to eq(attributes[:time_date])
       end
     end
   end

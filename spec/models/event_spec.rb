@@ -5,13 +5,13 @@ RSpec.describe Event, type: :model do
 
   describe "validate" do
     it "does not allow empty name" do
-      event = Event.create(name: "", location: "Address", description: "", time_date: "08/17/2017 11:00 AM")
+      event = Event.create(name: "", location: "Address", description: "", time_date: (Time.current+3.hours).strftime("%Y-%m-%d %I:%M %p"))
 
       expect(event.error_messages).to include("Name can't be blank")
     end
 
     it "does not allow empty location" do
-      event = Event.create(name: "Hi", location: "", description: "", time_date: "08/17/2017 11:00 AM")
+      event = Event.create(name: "Hi", location: "", description: "", time_date: (Time.current+3.hours).strftime("%Y-%m-%d %I:%M %p"))
 
       expect(event.error_messages).to include("Location can't be blank")
     end
@@ -23,10 +23,10 @@ RSpec.describe Event, type: :model do
 
   describe "#parse_time" do
     it "parses time with time_date_param" do
-      event = Event.new(name: "hi", description: "test event", location: "somewhere", time_date: "08/17/2017 11:00 AM")
+      event = Event.new(name: "hi", description: "test event", location: "somewhere", time_date: (Time.current+3.hours).strftime("%Y-%m-%d %I:%M %p"))
       event.save
 
-      expect(event.time_date).to eq("2017-08-17 11:00:00 -0700")
+      expect(event.time_date).to eq((Time.current+3.hours).strftime("%Y-%m-%d %I:%M %p"))
     end
   end
 
@@ -41,7 +41,7 @@ RSpec.describe Event, type: :model do
 
   describe "#time_date_future" do
     it "validates event is in the future" do
-      event = Event.new(name: "hi", description: "test event", location: "somewhere", time_date: "08/5/2017 11:00 AM")
+      event = Event.new(name: "hi", description: "test event", location: "somewhere", time_date: "2017-08-01 11:00 AM -07:00")
       event.save
 
       expect(event.error_messages).to include("Time & date must be a future event")
@@ -49,11 +49,8 @@ RSpec.describe Event, type: :model do
   end
 
   describe "#formatted_time" do
-    let(:event2) { create(:event, time_date: "08/5/2021 6:30 PM") }
-
     it "returns the time_date in a formatted string" do
-
-      expect(event2.formatted_time).to include("6:30 PM on Thursday, August 5, 2021")
+      expect(event.formatted_time).to include(event.time_date.to_time.strftime("%l:%M %p on %A, %B %-d, %Y"))
     end
   end
 end

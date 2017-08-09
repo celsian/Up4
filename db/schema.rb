@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20170727025540) do
     t.string "name"
     t.string "description"
     t.string "time_date"
-    t.datetime "time"
+    t.time "time"
     t.string "location"
     t.bigint "user_id"
     t.datetime "created_at", null: false
