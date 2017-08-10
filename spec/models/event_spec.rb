@@ -1,6 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe Event, type: :model do
+  before(:all) do
+    Geocoder.configure(:lookup => :test)
+
+    Geocoder::Lookup::Test.set_default_stub(
+      [
+        {
+          'latitude'     => 40.7143528,
+          'longitude'    => -74.0059731,
+          'address'      => 'New York, NY, USA',
+          'state'        => 'New York',
+          'state_code'   => 'NY',
+          'country'      => 'United States',
+          'country_code' => 'US'
+        }
+      ]
+    )
+  end
+
   let(:event) { create(:event) }
 
   describe "validate" do
@@ -14,6 +32,11 @@ RSpec.describe Event, type: :model do
       event = Event.create(name: "Hi", location: "", description: "", time_date: (Time.current+3.hours).strftime("%Y-%m-%d %I:%M %p"))
 
       expect(event.error_messages).to include("Location can't be blank")
+    end
+
+    it "populates longitude and latitude" do
+      expect(event.latitude).to eq(40.7143528)
+      expect(event.longitude).to eq(-74.0059731)
     end
 
     it "belongs to a user" do

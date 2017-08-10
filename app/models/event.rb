@@ -1,5 +1,6 @@
 class Event < ApplicationRecord
   before_validation :time_update
+  after_validation :geocode, :if => :location_changed?
 
   alias_attribute :owner, :user
   belongs_to :user
@@ -10,6 +11,8 @@ class Event < ApplicationRecord
   validates_presence_of(:name, :location)
   validate :time_date_format
   validate :time_date_future
+
+  geocoded_by :location
 
   TIME_DATE_PATTERN = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}) [AP]M [-+](\d{2}):(\d{2})/
 

@@ -3,7 +3,7 @@ FactoryGirl.define do
     name "Wonder Woman (Orange)"
     description "Before she was Wonder Woman (Gal Gadot), she was Diana, princess of the Amazons."
     time_date (Time.current+3.hours).strftime("%F %I:%M %p %:z")
-    location "20 City Blvd W E, Orange, CA 92868"
+    location "value is stubbed, see spec"
     association :owner, factory: :user
 
     trait :in_the_past do
