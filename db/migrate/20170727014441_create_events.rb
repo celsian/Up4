@@ -6,6 +6,8 @@ class CreateEvents < ActiveRecord::Migration[5.1]
       t.string :time_date
       t.datetime :time
       t.string :location
+      t.float :latitude
+      t.float :longitude
       t.references :user, index: true
 
       t.timestamps
