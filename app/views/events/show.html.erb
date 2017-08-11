@@ -32,7 +32,7 @@
     <div class="col-md-1">
     </div>
     <div class="col-md-10">
-      <img border="2" src="https://maps.googleapis.com/maps/api/staticmap?zoom=15&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:<%= @event.location %>%7C<%= @event.latitude %>,<%= @event.longitude %>&key=<%= Rails.application.secrets. GOOGLE_STATIC_MAPS_API_KEY %>">
+      <%= link_to image_tag("https://maps.googleapis.com/maps/api/staticmap?zoom=15&size=600x300&maptype=roadmap&markers=color:red%7C#{@event.latitude},#{@event.longitude}&key=#{Rails.application.secrets.GOOGLE_STATIC_MAPS_API_KEY}"), "http://maps.google.com/?q=#{@event.latitude},#{@event.longitude}" %>
     </div>
   </div>
 </div>

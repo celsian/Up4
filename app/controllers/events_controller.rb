@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   def index
+    @city = request.location.city
     @events = Event.where("time >= ?", Time.current)
   end
 
