@@ -1,8 +1,30 @@
-<H2>Upcoming events in your area:</H2>
-<ul>
-  <% @events.each do |event| %>
-  <li><%= link_to event.name, event_path(event) %></li>
-  <% end %>
-</ul>
-<br>
-Your location is set to: <%= @city %>, click here to change it.
+<div>
+  <div class="col-md-9">
+    <div class="row">
+      <H2>Upcoming events in your area:</H2>
+      <ul>
+        <% @events.each do |event| %>
+        <li><%= link_to event.name, event_path(event) %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="row">
+      <center>
+        Current Location: <b><%= @city %></b><br>
+        <small>Click here to change it.</small>
+      </center>
+    </div>
+    <div class="row">
+        <br>
+        <center>
+          <small>
+            Events total: <b><%= @total_events %></b><br>
+            Future events total: <b><%= @total_future_events %></b>
+          </small>
+        </center>
+    </div>
+  </div>
+</div>
+
