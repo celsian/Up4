@@ -1,8 +1,8 @@
-<H2>Events:</H2>
+<H2>Upcoming events in your area:</H2>
 <ul>
   <% @events.each do |event| %>
   <li><%= link_to event.name, event_path(event) %></li>
   <% end %>
 </ul>
 <br>
-Your location has been detected as: <%= @city %>, click here to change it.
+Your location is set to: <%= @city %>, click here to change it.

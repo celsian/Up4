@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
   before_validation :time_update
-  after_validation :geocode, :if => :location_changed?
+  after_validation :geocode, if: :location_changed?
 
   alias_attribute :owner, :user
   belongs_to :user

@@ -4,6 +4,20 @@ RSpec.describe EventsController, type: :controller do
   before(:all) do
     Geocoder.configure(:lookup => :test)
 
+    Geocoder::Lookup::Test.add_stub(
+      "Escondido, CA", [
+        {
+          'latitude'     => 33.1192068,
+          'longitude'    => -117.086421,
+          'address'      => 'Escondido, CA, USA',
+          'state'        => 'California',
+          'state_code'   => 'CA',
+          'country'      => 'United States',
+          'country_code' => 'US'
+        }
+      ]
+    )
+
     Geocoder::Lookup::Test.set_default_stub(
       [
         {
@@ -27,7 +41,8 @@ RSpec.describe EventsController, type: :controller do
 
   describe "GET #index" do
     let!(:event1) { create(:event) }
-    let!(:event2) { create(:event, :in_the_past) }
+    let!(:event2) { create(:event, :far_away) }
+    let!(:event3) { create(:event, :in_the_past) }
 
     it "returns http success" do
       get :index
@@ -35,10 +50,12 @@ RSpec.describe EventsController, type: :controller do
       expect(response).to have_http_status(:success)
     end
 
-    it "lists all future events" do
+    it "lists all future events in the area" do
       get :index
 
-      expect(Event.where("time >= ?", Time.current).count).to eq(assigns(:events).count)
+      test_events = Event.where("time >= ?", Time.current).near(assigns(:city))
+
+      expect(test_events.size).to eq(assigns(:events).size)
     end
   end
 

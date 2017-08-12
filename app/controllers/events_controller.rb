@@ -1,7 +1,8 @@
 class EventsController < ApplicationController
   def index
-    @city = request.location.city
-    @events = Event.where("time >= ?", Time.current)
+    @user_location = Geocoder.search(remote_ip).first
+    @city = "#{@user_location.data['city']}, #{@user_location.data['region_code']}, #{@user_location.data['country_code']}"
+    @events = Event.where("time >= ?", Time.current).near(@city)
   end
 
   def show

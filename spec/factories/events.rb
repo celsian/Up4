@@ -6,6 +6,10 @@ FactoryGirl.define do
     location "value is stubbed, see spec"
     association :owner, factory: :user
 
+    trait :far_away do
+      location "Escondido, CA"
+    end
+
     trait :in_the_past do
       time_date (Time.current-3.hours).strftime("%F %I:%M %p %:z")
       to_create {|instance| instance.save(validate: false) }
