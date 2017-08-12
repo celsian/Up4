@@ -22,5 +22,7 @@
 
 #Apple Files
 *.DS_Store
-# Ignore encrypted secrets key file.
+
+# Ignore encrypted secrets key files
 config/secrets.yml.key
+config/secrets.yml
