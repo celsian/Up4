@@ -13,7 +13,8 @@
     <div class="row">
       <center>
         Current Location: <b><%= @city %></b><br>
-        <small>Click here to change it.</small>
+        <small>Click here to change it.</small><br>
+        <small>Change your search radius: <b><%= link_to "5,", events_path(:distance => 5) %> <%= link_to "10,", events_path(:distance => 10) %> <%= link_to "25", events_path(:distance => 25) %></b> or <b><%= link_to "50", events_path(:distance => 50) %></b> Miles</small>
       </center>
     </div>
     <div class="row">
