@@ -5,11 +5,25 @@ RSpec.describe EventsController, type: :controller do
     Geocoder.configure(:lookup => :test)
 
     Geocoder::Lookup::Test.add_stub(
-      "Escondido, CA", [
+      "New York, NY", [
         {
-          'latitude'     => 33.1192068,
-          'longitude'    => -117.086421,
-          'address'      => 'Escondido, CA, USA',
+          'latitude'     => 40.7143528,
+          'longitude'    => -74.0059731,
+          'address'      => 'New York, NY, USA',
+          'state'        => 'New York',
+          'state_code'   => 'NY',
+          'country'      => 'United States',
+          'country_code' => 'US'
+        }
+      ]
+    )
+
+    Geocoder::Lookup::Test.add_stub(
+      "Vista, CA", [
+        {
+          'latitude'     => 33.2388149,
+          'longitude'    =>  -117.192687,
+          'address'      => 'Vista, CA, USA',
           'state'        => 'California',
           'state_code'   => 'CA',
           'country'      => 'United States',
@@ -21,11 +35,11 @@ RSpec.describe EventsController, type: :controller do
     Geocoder::Lookup::Test.set_default_stub(
       [
         {
-          'latitude'     => 40.7143528,
-          'longitude'    => -74.0059731,
-          'address'      => 'New York, NY, USA',
-          'state'        => 'New York',
-          'state_code'   => 'NY',
+          'latitude'     => 33.1192068,
+          'longitude'    => -117.086421,
+          'address'      => 'Escondido, CA, USA',
+          'state'        => 'California',
+          'state_code'   => 'CA',
           'country'      => 'United States',
           'country_code' => 'US'
         }
@@ -41,8 +55,11 @@ RSpec.describe EventsController, type: :controller do
 
   describe "GET #index" do
     let!(:event1) { create(:event) }
-    let!(:event2) { create(:event, :far_away) }
-    let!(:event3) { create(:event, :in_the_past) }
+    let!(:event2) { create(:event, :miles_away) }
+    let!(:event3) { create(:event, :far_away) }
+    let!(:event4) { create(:event, :in_the_past) }
+    let(:params_default) { { distance: "10" } }
+    let(:params_25_mile) { { distance: "25" } }
 
     it "returns http success" do
       get :index
@@ -53,7 +70,15 @@ RSpec.describe EventsController, type: :controller do
     it "lists all future events in the area" do
       get :index
 
-      test_events = Event.where("time >= ?", Time.current).near(assigns(:city))
+      test_events = Event.where("time >= ?", Time.current).near(assigns(:city), params_default[:distance])
+
+      expect(test_events.size).to eq(assigns(:events).size)
+    end
+
+    it "lists all future events in the area" do
+      get :index, params: params_25_mile
+
+      test_events = Event.where("time >= ?", Time.current).near(assigns(:city), params_25_mile[:distance])
 
       expect(test_events.size).to eq(assigns(:events).size)
     end
