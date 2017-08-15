@@ -1,9 +1,9 @@
 class EventsController < ApplicationController
   def index
-    distance = (params[:distance] || 20).to_i
+    distance = (params[:distance] || 10).to_i
     @user_location = Geocoder.search(remote_ip).first
     @city = "#{@user_location.data['city']}, #{@user_location.data['region_code']}, #{@user_location.data['country_code']}"
-    @events = Event.where("time >= ?", Time.current).near(@city)
+    @events = Event.where("time >= ?", Time.current).near(@city, distance)
 
     @total_events = Event.all.count
     @total_future_events = Event.where("time >= ?", Time.current).count

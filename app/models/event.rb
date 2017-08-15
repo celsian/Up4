@@ -14,6 +14,7 @@ class Event < ApplicationRecord
 
   geocoded_by :location
 
+  SEARCH_DISTANCES = [5, 10, 25, 50]
   TIME_DATE_PATTERN = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}) [AP]M [-+](\d{2}):(\d{2})/
 
   def time_date_format
