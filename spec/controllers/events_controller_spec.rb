@@ -114,6 +114,23 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
+  describe "GET #edit" do
+    let(:event) { create(:event) }
+    let(:params) { { id: event.id } }
+    it "returns http success" do
+      get :edit, params: params
+
+      expect(response).to have_http_status(:success)
+    end
+
+    it "contains an existing event object" do
+      get :edit, params: params
+
+      expect(assigns(:event)).to eq(event)
+      expect(assigns(:event)).to be_persisted
+    end
+  end
+
   describe "POST #create" do
     context "user logged in" do
       let(:params) { { event: attributes} }
@@ -135,6 +152,44 @@ RSpec.describe EventsController, type: :controller do
         post :create, params: params
 
         expect(assigns(:event).time_date).to eq(attributes[:time_date])
+      end
+    end
+  end
+
+  describe "PATCH #update" do
+    context "user logged in" do
+      let(:event) { create(:event_with_user) }
+      let(:params) { { id: event.id, event: attributes} }
+      let(:attributes) { { name: "a new name not used before", location: "somewhere", time_date: (Time.current+4.hours).strftime("%Y-%m-%d %I:%M %p %:z") } }
+
+      it "updates & redirects to event show page", :sign_in_user do
+        patch :update, params: params
+
+        expect(response).to redirect_to(event_path(assigns(:event)))
+      end
+
+      it "has the same owner", :sign_in_user do
+        patch :update, params: params
+
+        expect(assigns(:event).owner).to eq(event.owner)
+      end
+
+      it "is the same event", :sign_in_user do
+        patch :update, params: params
+
+        expect(assigns(:event).id).to eq(event.id)
+      end
+
+      it "has the updated time", :sign_in_user do
+        patch :update, params: params
+
+        expect(assigns(:event).time_date).to eq(attributes[:time_date])
+      end
+
+      it "has updated name", :sign_in_user do
+        patch :update, params: params
+
+        expect(assigns(:event).name).to eq(attributes[:name])
       end
     end
   end

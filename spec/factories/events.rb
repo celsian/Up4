@@ -19,4 +19,8 @@ FactoryGirl.define do
       to_create {|instance| instance.save(validate: false) }
     end
   end
+
+  factory :event_with_user, :parent => :event do
+    users {[FactoryGirl.create(:user)]}
+  end
 end
