@@ -1,0 +1,29 @@
+ <%= form_for @event do |f| %>
+
+  <div><%= f.label :name %>
+    <%= f.text_field :name, autofocus: true, class: "form-control" %>
+  </div><br>
+
+  <div><%= f.label :description %> (Optional)<br>
+    <%= f.text_area :description, class: "form-control" %>
+  </div><br>
+
+  <div><%= f.label :location %>
+    <%= f.text_field :location, class: "form-control" %>
+  </div><br>
+
+  <div><%= f.label :time_date %> <small>yyyy-mm-dd hh:mm AM/PM +00:00</small><br>
+  </div>
+  <div style="overflow:hidden;">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="datetimepicker12"><%= f.text_field :time_date, :autocomplete => :off, class: "form-control" %>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div><%= f.submit class: "btn btn-primary" %></div>
+<% end %>

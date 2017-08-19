@@ -27,6 +27,12 @@
     <div class="row">
         <br>
         <center>
+        <%= link_to "Create Event", new_event_path, class: "btn btn-success" %>
+        </center>
+    </div>
+    <div class="row">
+        <br>
+        <center>
           <small>
             Events total: <b><%= @total_events %></b><br>
             Future events total: <b><%= @total_future_events %></b>
