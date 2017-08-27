@@ -6,6 +6,10 @@ FactoryGirl.define do
     location "value is stubbed, see default spec"
     association :owner, factory: :user
 
+    trait :tomorrow do
+      time_date (Time.current+24.hours).strftime("%F %I:%M %p %:z")
+    end
+
     trait :miles_away do
       location "Vista, CA"
     end

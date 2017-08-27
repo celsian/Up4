@@ -60,6 +60,8 @@ RSpec.describe EventsController, type: :controller do
     let!(:event4) { create(:event, :in_the_past) }
     let(:params_default) { { distance: "10" } }
     let(:params_25_mile) { { distance: "25" } }
+    let!(:event5) { create(:event, :tomorrow) }
+    let!(:event6) { create(:event) }
 
     it "returns http success" do
       get :index
@@ -70,17 +72,28 @@ RSpec.describe EventsController, type: :controller do
     it "lists all future events in the area" do
       get :index
 
-      test_events = Event.where("time >= ?", Time.current).near(assigns(:city), params_default[:distance])
+      test_events = Event.where(time: Time.current.midnight..Time.current.end_of_day).near(assigns(:city), params_default[:distance])
 
-      expect(test_events.size).to eq(assigns(:events).size)
+      expect(test_events.size).to eq(assigns(:events_today).size)
     end
 
-    it "lists all future events in the area" do
+    it "lists future events in the area" do
       get :index, params: params_25_mile
 
-      test_events = Event.where("time >= ?", Time.current).near(assigns(:city), params_25_mile[:distance])
+      test_events = Event.where(time: Time.current.midnight..Time.current.end_of_day).near(assigns(:city), params_25_mile[:distance])
 
-      expect(test_events.size).to eq(assigns(:events).size)
+      expect(test_events.size).to eq(assigns(:events_today).size)
+    end
+
+
+    it "lists today's events and future events separately." do
+      get :index, params: params_default
+
+      events_today = Event.where(time: Time.current.midnight..Time.current.end_of_day).near(assigns(:city), params_default[:distance])
+      events_tomorrow = Event.where("time >= ?", Time.current.end_of_day).near(assigns(:city), params_default[:distance])
+
+      expect(events_today.size).to eq(assigns(:events_today).size)
+      expect(events_tomorrow.size).to eq(assigns(:events_tomorrow).size)
     end
   end
 

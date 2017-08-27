@@ -2,11 +2,23 @@
   <div class="col-md-9">
     <div class="row">
       <H2>Upcoming events in your area:</H2>
-      <ul>
-        <% @events.each do |event| %>
-        <li><%= link_to event.name, event_path(event) %></li>
-        <% end %>
-      </ul>
+      <hr>
+      <% if @events_today.size > 0 %>
+          <h4>Today's Events:</h4>
+          <ul>
+            <% @events_today.each do |event| %>
+             <li><%= link_to event.name, event_path(event) %></li>
+            <% end %>
+          </ul>
+      <% end %>
+      <% if @events_tomorrow.size > 0 %>
+          <h4>Furure Events:</h4>
+          <ul>
+            <% @events_tomorrow.each do |event| %>
+             <li><%= link_to event.name, event_path(event) %></li>
+            <% end %>
+          </ul>
+      <% end %>
     </div>
   </div>
   <div class="col-md-3">
