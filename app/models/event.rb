@@ -39,6 +39,14 @@ class Event < ApplicationRecord
     format_first = time_date.to_time.strftime("%l:%M %p on %A, %B %-d, %Y %z")
   end
 
+  def formatted_time_short
+    time_date.to_time.strftime("%l:%M %p")
+  end
+
+  def formatted_time_long
+    time_date.to_time.strftime("%D")
+  end
+
   def error_messages
     messages = ""
     errors.full_messages.each do |message|

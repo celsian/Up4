@@ -74,4 +74,16 @@ RSpec.describe Event, type: :model do
       expect(event.formatted_time).to include(event.time_date.to_time.strftime("%l:%M %p on %A, %B %-d, %Y %z"))
     end
   end
+
+  describe "#formatted_time_short" do
+    it "returns the time_date in a formatted string" do
+      expect(event.formatted_time_short).to include(event.time_date.to_time.strftime("%l:%M %p"))
+    end
+  end
+
+  describe "#formatted_time_long" do
+    it "returns the time_date in a formatted string" do
+      expect(event.formatted_time_long).to include(event.time_date.to_time.strftime("%D"))
+    end
+  end
 end
