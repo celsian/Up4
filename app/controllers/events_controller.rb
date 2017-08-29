@@ -5,7 +5,7 @@ class EventsController < ApplicationController
     @city = "#{@user_location.data['city']}, #{@user_location.data['region_code']}. #{@user_location.data['country_code']}"
     Time.zone = @user_location.data['time_zone']
 
-    events = Event.where("time >= ?", Time.current).near(@city, distance)
+    events = Event.where("time >= ?", Time.current).near(@city, distance).reorder("time ASC")
     @events_today = events.where(time: Time.current..Time.current.end_of_day)
     @events_tomorrow = events.where("time >= ?", Time.current.end_of_day)
 
