@@ -7,7 +7,7 @@
           <h4>Today's Events:</h4>
           <ul>
             <% @events_today.each do |event| %>
-             <li><%= link_to event.name, event_path(event) %> at <%= event.formatted_time_short %></li>
+             <li><%= link_to event.name, event_path(event) %> at <%= event.formatted_time_short %>, <%= pluralize(event.distance.round(1), 'mile') %></li>
             <% end %>
           </ul>
       <% end %>
@@ -15,7 +15,7 @@
           <h4>Furure Events:</h4>
           <ul>
             <% @events_tomorrow.each do |event| %>
-             <li><%= link_to event.name, event_path(event) %> on <%= event.formatted_time_long %></li>
+             <li><%= link_to event.name, event_path(event) %> on <%= event.formatted_time_long %>, <%= pluralize(event.distance.round(1), 'mile') %></li>
             <% end %>
           </ul>
       <% end %>
