@@ -1,31 +1,28 @@
-<div>
-  <div class="col-md-9">
-    <div class="row">
-      <H2>Upcoming events in your area:</H2>
-      <hr>
-      <% if @events_today.size > 0 %>
-          <h4>Today's Events:</h4>
-          <ul>
-            <% @events_today.each do |event| %>
-             <li><%= link_to event.name, event_path(event) %> at <%= event.formatted_time_short %>, <%= pluralize(event.distance.round(1), 'mile') %></li>
-            <% end %>
-          </ul>
-      <% end %>
-      <% if @events_tomorrow.size > 0 %>
-          <h4>Furure Events:</h4>
-          <ul>
-            <% @events_tomorrow.each do |event| %>
-             <li><%= link_to event.name, event_path(event) %> on <%= event.formatted_time_long %>, <%= pluralize(event.distance.round(1), 'mile') %></li>
-            <% end %>
-          </ul>
-      <% end %>
-    </div>
+<div class="row">
+  <div class="col-sm-9">
+    <H2>Upcoming events in your area:</H2>
+    <hr>
+    <% if @events_today.size > 0 %>
+        <h4>Today's Events:</h4>
+        <ul>
+          <% @events_today.each do |event| %>
+           <li><%= link_to event.name, event_path(event) %> at <%= event.formatted_time_short %>, <%= pluralize(event.distance.round(1), 'mile') %></li>
+          <% end %>
+        </ul>
+    <% end %>
+    <% if @events_tomorrow.size > 0 %>
+        <h4>Future Events:</h4>
+        <ul>
+          <% @events_tomorrow.each do |event| %>
+           <li><%= link_to event.name, event_path(event) %> on <%= event.formatted_time_long %>, <%= pluralize(event.distance.round(1), 'mile') %></li>
+          <% end %>
+        </ul>
+    <% end %>
   </div>
-  <div class="col-md-3">
-    <div class="row">
+  <div class="col-sm-3">
       <center>
-        Current Location: <b><%= @city %></b><br>
-        <small>Click here to change it.</small><br>
+        Current Location:<br>
+        <b><%= @city %></b><br>
         <small>
           Search radius:
             <% Event::SEARCH_DISTANCES.each do |dist| %>
@@ -35,14 +32,10 @@
             <% end %>
         </small>
       </center>
-    </div>
-    <div class="row">
         <br>
         <center>
         <%= link_to "Create Event", new_event_path, class: "btn btn-success" %>
         </center>
-    </div>
-    <div class="row">
         <br>
         <center>
           <small>
@@ -50,7 +43,5 @@
             Future events total: <b><%= @total_future_events %></b>
           </small>
         </center>
-    </div>
   </div>
 </div>
-
