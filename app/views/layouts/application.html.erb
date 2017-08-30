@@ -30,7 +30,7 @@
           <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item <%= 'active' if current_page?(events_path) %>">
-                <li><%= link_to "Events", events_path, class: "nav-link" %></li>
+                <%= link_to "Events", events_path, class: "nav-link" %>
               </li>
             </ul>
             <ul class="navbar-nav navbar-right">
