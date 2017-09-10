@@ -13,6 +13,9 @@
     <div><%= f.label :password_confirmation %><br />
       <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Password", autocomplete: "off" %></div>
   <br>
+  <div><%= f.label :location %>
+      <%= f.text_field :location, class: "form-control", placeholder: "Your Address" %></div>
+  <br>
     <div><%= f.submit "Sign up", class: "btn btn-primary" %></div>
   <% end %>
   <br>
