@@ -11,14 +11,17 @@
       <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
     <% end %>
   <br>
-    <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+    <div><%= f.label :password %> <small><i>(leave blank if you don't want to change it)</i></small><br />
       <%= f.password_field :password, class: "form-control", placeholder: "New Password", autocomplete: "off" %></div>
   <br>
     <div><%= f.label :password_confirmation %><br />
       <%= f.password_field :password_confirmation, class: "form-control", placeholder: "New Password", autocomplete: "off" %></div>
   <br>
-    <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+    <div><%= f.label :current_password %> <small><i>(we need your current password to confirm your changes)</i></small><br />
       <%= f.password_field :current_password, class: "form-control", placeholder: "Old Password", autocomplete: "off" %></div>
+  <br>
+    <div><%= f.label :location %>
+      <%= f.text_field :location, class: "form-control", placeholder: "Your Address" %></div>
   <br>
     <div><%= f.submit "Update", class: "btn btn-primary" %></div>
   <% end %>
