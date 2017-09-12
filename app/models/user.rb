@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  after_validation :geocode, if: :location_changed?
+
   validates_presence_of :location
 
   has_many :user_events
