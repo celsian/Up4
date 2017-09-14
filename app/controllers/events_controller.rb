@@ -4,15 +4,15 @@ class EventsController < ApplicationController
 
     if current_user
       @user_location = Geocoder.search(current_user.location).first
-      @city = @user_location.data["formatted_address"]
+      @address = @user_location.data["formatted_address"]
     else
       @user_location = Geocoder.search(remote_ip).first
-      @city = "#{@user_location.data['city']}, #{@user_location.data['region_code']}. #{@user_location.data['country_code']}"
+      @address = "#{@user_location.data['city']}, #{@user_location.data['region_code']}. #{@user_location.data['country_code']}"
     end
 
     Time.zone = @user_location.data['time_zone']
 
-    events = Event.where("time >= ?", Time.current).near(@city, distance).reorder("time ASC")
+    events = Event.where("time >= ?", Time.current).near(@address, distance).reorder("time ASC")
     @events_today = events.where(time: Time.current..Time.current.end_of_day)
     @events_future = events.where("time >= ?", Time.current.end_of_day)
 
