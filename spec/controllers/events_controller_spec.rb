@@ -49,7 +49,7 @@ RSpec.describe EventsController, type: :controller do
 
   let(:user) { create(:user) }
 
-  before(:each, :sign_in_user) do
+  before(:each) do
     sign_in user
   end
 
@@ -149,19 +149,19 @@ RSpec.describe EventsController, type: :controller do
       let(:params) { { event: attributes} }
       let(:attributes) { { name: "hi", location: "somewhere", time_date: (Time.current+3.hours).strftime("%Y-%m-%d %I:%M %p %:z") } }
 
-      it "creates & redirects to event show page", :sign_in_user do
+      it "creates & redirects to event show page" do
         post :create, params: params
 
         expect(response).to redirect_to(event_path(assigns(:event)))
       end
 
-      it "has the proper owner", :sign_in_user do
+      it "has the proper owner" do
         post :create, params: params
 
         expect(assigns(:event).users).to include(user)
       end
 
-      it "has the proper time", :sign_in_user do
+      it "has the proper time" do
         post :create, params: params
 
         expect(assigns(:event).time_date).to eq(attributes[:time_date])
@@ -175,31 +175,31 @@ RSpec.describe EventsController, type: :controller do
       let(:params) { { id: event.id, event: attributes} }
       let(:attributes) { { name: "a new name not used before", location: "somewhere", time_date: (Time.current+4.hours).strftime("%Y-%m-%d %I:%M %p %:z") } }
 
-      it "updates & redirects to event show page", :sign_in_user do
+      it "updates & redirects to event show page" do
         patch :update, params: params
 
         expect(response).to redirect_to(event_path(assigns(:event)))
       end
 
-      it "has the same owner", :sign_in_user do
+      it "has the same owner" do
         patch :update, params: params
 
         expect(assigns(:event).owner).to eq(event.owner)
       end
 
-      it "is the same event", :sign_in_user do
+      it "is the same event" do
         patch :update, params: params
 
         expect(assigns(:event).id).to eq(event.id)
       end
 
-      it "has the updated time", :sign_in_user do
+      it "has the updated time" do
         patch :update, params: params
 
         expect(assigns(:event).time_date).to eq(attributes[:time_date])
       end
 
-      it "has updated name", :sign_in_user do
+      it "has updated name" do
         patch :update, params: params
 
         expect(assigns(:event).name).to eq(attributes[:name])
