@@ -90,10 +90,10 @@ RSpec.describe EventsController, type: :controller do
       get :index, params: params_default
 
       events_today = Event.where(time: Time.current.midnight..Time.current.end_of_day).near(assigns(:city), params_default[:distance])
-      events_tomorrow = Event.where("time >= ?", Time.current.end_of_day).near(assigns(:city), params_default[:distance])
+      events_future = Event.where("time >= ?", Time.current.end_of_day).near(assigns(:city), params_default[:distance])
 
       expect(events_today.size).to eq(assigns(:events_today).size)
-      expect(events_tomorrow.size).to eq(assigns(:events_tomorrow).size)
+      expect(events_future.size).to eq(assigns(:events_future).size)
     end
   end
 

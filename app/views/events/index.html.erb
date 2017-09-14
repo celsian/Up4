@@ -10,10 +10,10 @@
           <% end %>
         </ul>
     <% end %>
-    <% if @events_tomorrow.size > 0 %>
+    <% if @events_future.size > 0 %>
         <h4>Future Events:</h4>
         <ul>
-          <% @events_tomorrow.each do |event| %>
+          <% @events_future.each do |event| %>
            <li><%= link_to event.name, event_path(event) %> on <%= event.formatted_time_long %>, <%= pluralize(event.distance.round(1), 'mile') %></li>
           <% end %>
         </ul>
