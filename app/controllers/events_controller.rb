@@ -1,8 +1,9 @@
 class EventsController < ApplicationController
   def index
     distance = (params[:distance] || 10).to_i
-    @user_location = Geocoder.search(remote_ip).first
-    @city = "#{@user_location.data['city']}, #{@user_location.data['region_code']}. #{@user_location.data['country_code']}"
+    @user_location = Geocoder.search(current_user.location).first #This is for pulling location from IP if location doesnt exist, which it should because it's a validation now || Geocoder.search(remote_ip).first
+    #This is for partsing IP search results --> @city = "#{@user_location.data['city']}, #{@user_location.data['region_code']}. #{@user_location.data['country_code']}"
+    @city = @user_location.data["formatted_address"]
     Time.zone = @user_location.data['time_zone']
 
     events = Event.where("time >= ?", Time.current).near(@city, distance).reorder("time ASC")
