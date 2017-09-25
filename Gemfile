@@ -7,6 +7,7 @@ gem 'rails', '~> 5.1.2'
 gem "pg"
 gem 'devise'
 gem 'geocoder', git: "https://github.com/alexreisner/geocoder.git", branch: 'master'
+gem 'timezone'
 
 gem 'momentjs-rails', '>= 2.9.0' #for datetimepicker
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
