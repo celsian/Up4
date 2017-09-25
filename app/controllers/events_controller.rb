@@ -5,7 +5,7 @@ class EventsController < ApplicationController
     if current_user
       @user_location = Geocoder.search(current_user.location).first
       @address = @user_location.data["formatted_address"]
-      # Time.zone = Time.
+      Time.zone = Timezone.lookup(current_user.latitude, current_user.longitude).name
     else
       @user_location = Geocoder.search(remote_ip).first
       @address = "#{@user_location.data['city']}, #{@user_location.data['region_code']}. #{@user_location.data['country_code']}"
