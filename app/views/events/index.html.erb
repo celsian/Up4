@@ -6,7 +6,7 @@
         <h4>Today's Events:</h4>
         <ol>
         <% @events_today.each do |event| %>
-          <li><%= link_to "#{event.name}: Today at #{event.formatted_time_short} - #{pluralize(event.distance.round(1), 'mile')}", event_path(event) %></li>
+          <li><%= link_to "#{event.name}", event_path(event) %> at <%= "#{event.formatted_time_short} - #{pluralize(event.distance.round(1), 'mile')}" %></li>
         <% end %>
         </ol>
     <% end %>
