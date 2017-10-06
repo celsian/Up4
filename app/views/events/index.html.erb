@@ -4,25 +4,20 @@
     <hr>
     <% if @events_today.size > 0 %>
         <h4>Today's Events:</h4>
+        <ol>
         <% @events_today.each do |event| %>
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src=<%= "https://maps.googleapis.com/maps/api/staticmap?zoom=15&size=600x300&maptype=roadmap&markers=color:red%7C#{event.latitude},#{event.longitude}&key=#{Rails.application.secrets.google_static_maps_api_key}" %> alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title"><%= event.name.length < 19 ? "#{event.name}" : "#{event.name[0..21]}..." %></h5>
-              <p class="card-text"><%= event.description %></p>
-              <%= link_to "Today at #{event.formatted_time_short} - #{pluralize(event.distance.round(1), 'mile')}", event_path(event), class: "btn btn-primary" %>
-            </div>
-          </div>
+          <li><%= link_to "#{event.name}: Today at #{event.formatted_time_short} - #{pluralize(event.distance.round(1), 'mile')}", event_path(event) %></li>
         <% end %>
+        </ol>
     <% end %>
 
     <% if @events_future.size > 0 %>
         <h4>Future Events:</h4>
-        <ul>
+        <ol>
           <% @events_future.each do |event| %>
            <li><%= link_to event.name, event_path(event) %> on <%= event.formatted_time_long %>, <%= pluralize(event.distance.round(1), 'mile') %></li>
           <% end %>
-        </ul>
+        </ol>
     <% end %>
   </div>
   <div class="col-sm-3">
@@ -61,27 +56,14 @@
   </div>
 </div>
 
+<!--
 <div class="card-deck">
-  <div class="card">
+   <div class="card">
     <img class="card-img-top" src="http://payload305.cargocollective.com/1/8/258061/8403272/Carrack_top_three_quarter_gurmukh_half_2000.png" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">Test</h5>
       <p class="card-text">Test</p>
     </div>
   </div>
-  <div class="card">
-    <img class="card-img-top" src="http://payload305.cargocollective.com/1/8/258061/8403272/Carrack_top_three_quarter_gurmukh_half_2000.png" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-    </div>
-  </div>
-  <div class="card">
-    <img class="card-img-top" src="http://payload305.cargocollective.com/1/8/258061/8403272/Carrack_top_three_quarter_gurmukh_half_2000.png" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-    </div>
-  </div>
 </div>
+--!>
